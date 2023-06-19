@@ -1,0 +1,286 @@
+
+ {% extends 'base.html'%}
+
+
+
+
+{% block content %}
+<div style="background: url('/media/img/images/homepage.jpg');background-repeat:no-repeat;background-size: cover;color: white;height: 620px">
+
+
+
+<div class="container">
+
+  <div class="col-md-12 ">
+{% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+    <form class="form-horizontal" action='/AddEvidence/' method="POST" enctype="multipart/form-data" id="form1"> 
+    {% csrf_token %}
+
+
+
+	<div class="col-md-12" style="background-color: #2a5868;margin-top: 30px">
+		
+		<br>
+
+		 <h3 class="card-title text-center" style="color:white">ADD EVIDENCE</h3>
+			<hr style=" border-top:  2px solid white">
+
+
+
+		<div class="row">
+          <div class="col-md-4 "style="margin-bottom: 20px">
+            <label for="first_name" style="color: white;font-weight: bold;">Case ID</label>
+			<select class="form-control" onchange="PopulateSuspects(this)" id="Case_id" name="Case_id"  class="form-control ">
+				<option  value="Select">Select</option>
+				{% for entry in Case %}
+	    		<option value="{{ entry.id }}">{{ entry.id }} - {{ entry.Name }}</option>
+				{% endfor %}
+			</select>
+          </div>         
+        </div>
+
+		<div class="row">
+          <div class="col-md-6 "style="margin-bottom: 20px">
+            <label for="first_name" style="color: white;font-weight: bold;">Evidence</label>
+		<input type="text" name="Evidence" id="Evidence"  placeholder="Evidence" class="form-control ">
+          </div>
+          <div class="col-md-6 "style="margin-bottom: 20px">
+            <label  style="color: white;font-weight: bold;">Image</label>
+		  <input type="file"  id="Image"  name="Image"  class="form-control ">
+          </div>
+         
+        </div>
+
+        <div class="row">
+
+    		 <div class="col-md-4 "style="margin-bottom: 20px">
+            <label style="color: white" for="validationTooltipUsername">Suspect</label>
+             <select class="form-control" id="Suspect_Name" disabled="true" name="Suspect_Name"  class="form-control ">
+				<option  value="Select">Select</option>
+				
+			</select>
+          </div>
+
+          <div class="col-md-4 "style="margin-bottom: 20px">
+          	 <label style="color: white"  for="validationTooltip02">Type</label>  
+            <select class="form-control" id="Type" name="Type"  class="form-control ">
+				<option  value="Select">Select</option>
+		    		<option value="Logical">Logical</option>
+		    		<option value="Physical">Physical</option>
+		    		
+			</select>       
+          </div>
+
+          
+          <div class="col-md-4 "style="margin-bottom: 20px">
+            <label for="Mobile"   style="color: white;font-weight: bold;">Note</label>
+     		<input type="text" id="Note" name="Note"  placeholder="Note" class="form-control ">
+          
+          </div>
+        </div>
+
+
+        <div class="row">
+          
+
+		<div class="col-md-4 "style="margin-bottom: 20px">
+            <label for="City"  style="color: white;font-weight: bold;">Rank</label>
+		    <select class="form-control" id="Rank" name="Rank"  class="form-control ">
+				<option  value="Select">Select</option>
+		    		<option value="1">1</option>
+		    		<option value="2">2</option>
+		    		<option value="3">3</option>
+		    		<option value="4">4</option>
+		    		<option value="5">5</option>
+		    		<option value="6">6</option>
+		    		<option value="7">7</option>
+		    		<option value="8">8</option>
+		    		<option value="9">9</option>
+		    		<option value="10">10</option>
+			</select>
+				 	
+          </div>        
+
+		<div class="col-md-4 "style="margin-bottom: 20px">
+            <label for="Note"  style="color: white;font-weight: bold;">Officer</label>
+			<input type="text" id="Officer_Name" name="Officer_Name" readonly="true" value="{{Oid}}" class="form-control ">
+				 	
+          </div>
+
+
+    	</div>  
+
+	    <div class="col-md-12  text-center" style="margin-top: 20px">
+
+			<input type="button" class="btn btn-success" name="" value="Register" onclick="check()">
+			<br>
+			<hr style=" border-top:  2px solid white">
+		</div>
+
+		
+
+	</div>
+	<br><br>
+
+    </form>
+<div class="col-md-12 divsign">
+	<div class="col-md-8 paddn">
+<br><br>
+	</div>
+	
+	</div>
+
+  </div>
+<br><br>
+</div>
+</div>
+
+
+<script type="text/javascript">
+	
+	function check() 
+	{ 
+		
+		if (document.getElementById('Case_id').value !=  "Select")
+		{
+			if (document.getElementById('Evidence').value !=  "")
+			{
+				if (document.getElementById('Image').value !=  "")
+				{
+					if (document.getElementById('Suspect_Name').value !=  "Select")
+					{
+						if (document.getElementById('Type').value !=  "Select")
+						{
+							if (document.getElementById('Note').value !=  "")
+							{
+								if (document.getElementById('Rank').value !=  "Select")
+								{
+									if (document.getElementById('Officer_Name').value !=  "Select")
+									{
+										document.getElementById('form1').submit()
+										return true;
+									}
+									else
+									{
+										alert('Select Officer Name');
+										return false;
+									}
+								}
+								else
+								{
+									alert('Select Rank');
+									return false;
+								}
+							}
+							else
+							{
+								alert('Enter Note');
+								return false;
+							}
+							
+						}
+						else
+						{
+							alert('Select Type');
+							return false;
+						}
+						
+					}
+					else
+					{
+						alert('Select Suspect Name');
+						return false;
+					}
+				}
+				else
+				{
+					alert('Upload Image');
+					return false;
+				}
+			}
+			else
+			{
+				alert('Enter Evidence');
+				return false;
+			}
+		}
+		else
+		{
+			alert('Select Case Id');
+			return false;
+		}
+		
+		
+	}
+
+
+	function PopulateSuspects(me)
+	{
+		var caseId = me.value;
+		if(caseId != "Select")
+		{
+
+
+		      $.ajax({
+		          		type: "POST",
+		              		url: '{% url 'get_response' %}',
+		              		data: {
+
+		                  'caseId' : caseId,
+		                  'csrfmiddlewaretoken': '{{ csrf_token }}',
+
+		              		},
+
+		              //dataType: 'json',
+		              		success: function (data) 
+		              		{
+				                var Ans = data["respond"];
+
+				                if(Ans == "No Suspects Are Available for the Case Kindly add Suspects to add Evidence")
+				                {
+				                	alert(Ans);	
+				                	$('#Suspect_Name option:not(:first)').remove();
+				                	document.getElementById('Suspect_Name').disabled = true;
+				                }
+				                else
+				                {
+				                	var select = document.getElementById("Suspect_Name"); 
+				                	Ans = Ans.substring(0, Ans.length - 1);
+
+									var res = Ans.split('%');
+
+									for(var i = 0; i < res.length; i++) 
+									{
+										var names = res[i].split('&');
+										var id = names[0]
+										var name = names[1]
+
+									    var el = document.createElement("option");
+									    el.text = name;
+									    el.value = id;
+									    select.add(el);
+									}
+									document.getElementById('Suspect_Name').disabled = false;
+				                }
+		              		}
+		            })
+		                	
+		}
+		else
+		{
+			alert("Kindly Select A Case Id");
+			document.getElementById('Suspect_Name').disabled = true;
+		}
+	}
+
+
+
+</script>
+{% endblock %}

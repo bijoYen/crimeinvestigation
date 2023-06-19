@@ -1,0 +1,216 @@
+
+ {% extends 'base.html'%}
+
+
+
+
+{% block content %}
+<div style="background: url('/media/img/images/homepage.jpg');background-repeat:no-repeat;background-size: cover;color: white;height: 701px">
+
+
+
+<div class="container">
+
+  <div class="col-md-12 ">
+{% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+    <form class="form-horizontal" action='/AddOfficer/' method="POST" enctype="multipart/form-data" id="form1"> 
+    {% csrf_token %}
+
+
+
+	<div class="col-md-12" style="background-color: #2a5868;margin-top: 30px">
+		
+		<br>
+
+		 <h3 class="card-title text-center" style="color:white">ADD OFFICER</h3>
+			<hr style=" border-top:  2px solid white">
+
+
+
+		<div class="row">
+          <div class="col-md-6 "style="margin-bottom: 20px">
+            <label for="first_name" style="color: white;font-weight: bold;">First Name</label>
+		<input type="text" name="first_name" id="first_name"  placeholder="First Name" class="form-control ">
+          </div>
+          <div class="col-md-6 "style="margin-bottom: 20px">
+            <label style="color: white"  for="validationTooltip02">Last name</label>
+            <input type="text" class="form-control" name="last_name" id="last_name"  placeholder="Last name" value="" >
+          </div>
+         
+        </div>
+
+
+        <div class="row">
+
+    		 <div class="col-md-4 "style="margin-bottom: 20px">
+            <label style="color: white" for="validationTooltipUsername">Username</label>
+              <input type="text" class="form-control" name="Username" id="Username" placeholder="Username" value="">
+          </div>
+
+          <div class="col-md-4 "style="margin-bottom: 20px">
+            <label for="email"  style="color: white;font-weight: bold;">Email</label>
+		  <input type="email" name="Email" id="Email"  placeholder="Email"class="form-control ">
+          </div>
+
+          
+          <div class="col-md-4 "style="margin-bottom: 20px">
+            <label for="Mobile"   style="color: white;font-weight: bold;">Mobile</label>
+     		<input type="number" id="Mobile" name="Mobile"  placeholder="Mobile Number" class="form-control ">
+          
+          </div>
+        </div>
+
+
+       <div class="row">
+
+       	<div class="col-md-12"style="margin-bottom: 20px">
+            <label for="Address"  style="color: white;font-weight: bold;">Image</label>
+         <input type="file"  id="Image"  name="Image"  class="form-control ">
+          </div>
+
+          <div class="col-md-12 "style="margin-bottom: 20px">
+            <label for="Address"  style="color: white;font-weight: bold;">Address</label>
+         <input type="text"  id="Address"  name="Address"  placeholder="Address" class="form-control ">
+          </div>
+    	</div>
+
+    	<div class="row">
+          
+
+		<div class="col-md-4 "style="margin-bottom: 20px">
+            <label for="City"  style="color: white;font-weight: bold;">City</label>
+		    <input type="text"  id="City"   name="City" placeholder="City" class="form-control ">
+				 	
+          </div>
+
+
+          <div class="col-md-4 "style="margin-bottom: 20px">
+             <label for="State"  style="color: white;font-weight: bold;">State</label>
+         <input type="text" id="State" name="State"  placeholder="State" class="form-control ">
+          </div>
+
+    	</div>
+
+
+
+
+	    <div class="col-md-12  text-center" style="margin-top: 20px">
+
+			<input type="button" class="btn btn-success" name="" value="Register" onclick="check()">
+			<br>
+			<hr style=" border-top:  2px solid white">
+		</div>
+
+		
+
+	</div>
+	<br><br>
+
+    </form>
+<div class="col-md-12 divsign">
+	<div class="col-md-8 paddn">
+<br><br>
+	</div>
+	
+	</div>
+
+  </div>
+<br><br>
+</div>
+</div>
+
+
+<script type="text/javascript">
+	
+	function check() 
+	{ 
+		
+		if (document.getElementById('first_name').value !=  "")
+		{
+			if (document.getElementById('last_name').value !=  "")
+			{
+				if (document.getElementById('Username').value !=  "")
+				{
+					if (document.getElementById('Email').value !=  "")
+					{
+						if (document.getElementById('Mobile').value !=  "")
+						{
+							if (document.getElementById('Address').value !=  "")
+							{
+								if (document.getElementById('City').value !=  "")
+								{
+									if (document.getElementById('State').value !=  "")
+									{
+										if (document.getElementById('Image').value !=  "")
+										{
+											document.getElementById('form1').submit()
+											return true;
+										}
+										else
+										{
+											alert('Enter Image');
+											return false;
+										}
+									}
+									else
+									{
+										alert('Enter State');
+										return false;
+									}
+								}
+								else
+								{
+									alert('Enter City');
+									return false;
+								}
+							}
+							else
+							{
+								alert('Enter Address');
+								return false;
+							}
+							
+						}
+						else
+						{
+							alert('Enter Mobile');
+							return false;
+						}
+						
+					}
+					else
+					{
+						alert('enter Email');
+						return false;
+					}
+				}
+				else
+				{
+					alert('Enter Username');
+					return false;
+				}
+			}
+			else
+			{
+				alert('Enter last name');
+				return false;
+			}
+		}
+		else
+		{
+			alert('Enter first name');
+			return false;
+		}
+		
+		
+	}
+
+</script>
+{% endblock %}

@@ -1,0 +1,151 @@
+
+ {% extends 'base.html'%}
+
+
+
+
+{% block content %}
+<div style="background: url('/media/img/images/homepage.jpg');background-repeat:no-repeat;background-size: cover;color: white;height: 690px">
+
+
+
+<div class="container">
+
+  <div class="col-md-12 ">
+{% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+    <form class="form-horizontal" action='/AddCase/' method="POST" id="form1"> 
+    {% csrf_token %}
+
+
+
+	<div class="col-md-12" style="background-color: #2a5868;margin-top: 30px">
+		
+		<br>
+
+		 <h3 class="card-title text-center" style="color:white">ADD CASE</h3>
+			<hr style=" border-top:  2px solid white">
+
+
+
+		<div class="row" style="margin: 20px">
+          <div class="col-md-12 "style="margin-bottom: 10px">
+            <label for="first_name" style="color: white;font-weight: bold;">Case Name</label>
+		<input type="text" name="Case_Name" id="Case_Name"  placeholder="Case Name" class="form-control ">
+          </div>
+         
+        
+        </div>
+
+       	<div class="row" style="margin: 20px">
+          <div class="col-md-12 "style="margin-bottom: 10px">
+            <label for="first_name" style="color: white;font-weight: bold;">Officer Name</label>
+			<select class="form-control" id="Officer_Name" name="Officer_Name"  class="form-control ">
+				<option  value="Select">Select</option>
+				{% for entry in Officer %}
+	    		<option value="{{ entry.id }}">{{ entry.id }} - {{ entry.FirstName }} {{ entry.LastName }}</option>
+				{% endfor %}
+			</select>
+          </div>
+
+           <div class="col-md-12 "style="margin-bottom: 10px">
+            <label for="first_name" style="color: white;font-weight: bold;">Case Type</label>
+			<select class="form-control" id="Case_Type" name="Case_Type"  class="form-control ">
+				<option  value="Select">Select</option>
+	    		<option value="Murder">Murder</option>
+	    		<option value="Kidnapping">Kidnapping</option>
+	    		<option value="Robbery">Robbery</option>
+	    		<option value="Fraud">Fraud</option>
+	    		<option value="Assault">Assault</option>
+	    		<option value="Blackmail">Blackmail</option>
+	    		<option value="Others">Others</option>
+			</select>
+          </div>
+        
+        </div>
+
+
+        <div class="row" style="margin: 20px">
+           <div class="col-md-12 ">
+            <label style="color: white"  for="validationTooltip02">Note</label>
+            <textarea class="form-control" name="Note" id="Note"  rows="5" placeholder="Note"></textarea>
+          </div>
+        </div>
+
+
+
+	    <div class="col-md-12  text-center" >
+
+			<input type="button" class="btn btn-success" name="" value="Register" onclick="check()">
+			<hr style=" border-top:  2px solid white">
+		</div>
+
+		
+
+	</div>
+	<br><br>
+
+    </form>
+<div class="col-md-12 divsign">
+	<div class="col-md-8 paddn">
+<br><br>
+	</div>
+	
+	</div>
+
+  </div>
+<br><br>
+</div>
+</div>
+
+<script type="text/javascript">
+	
+	function check() 
+	{ 
+		
+		if (document.getElementById('Case_Name').value !=  "")
+		{
+			if (document.getElementById('Officer_Name').value !=  "Select")
+			{				
+				if (document.getElementById('Note').value !=  "")
+				{
+					if (document.getElementById('Case_Type').value !=  "")
+					{
+						document.getElementById('form1').submit();
+						return true;
+					}
+					else
+					{
+						alert('Enter Case Type');
+						return false;
+					}
+				}
+				else
+				{
+					alert('Enter Note');
+					return false;
+				}
+			}
+			else
+			{
+				alert('Enter Officer Name');
+				return false;
+			}
+		}
+		else
+		{
+			alert('Enter Case Name');
+			return false;
+		}
+		
+		
+	}
+
+</script>
+{% endblock %}
